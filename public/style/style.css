@@ -1,11 +1,13 @@
-  .sidebar {
-    position: fixed;
-    top: 0;
-    left: 0;
-    bottom: 0;
-    z-index: 1000; /* ajuste conforme necessário */
-    overflow-y: auto;
-  }
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  max-width: 250px; /* Defina a largura máxima desejada */
+  width: 100%; /* Garante que a largura não ultrapasse a largura do viewport */
+  z-index: 1000;
+  overflow-y: auto;
+}
   
   .col {
     padding-left: 250px; /* ajuste conforme a largura da sua sidebar */
