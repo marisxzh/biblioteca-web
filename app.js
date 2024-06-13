@@ -243,14 +243,12 @@ app.post('/cadastrarEmprestimo', (req, res) => {
 
   // Extraindo os valores do corpo da requisição
   const usuario = parseInt(req.body.nome_usuario)
-  const livro = parseInt(req.body.nome_livro)
+  const livro = parseInt(req.body.id_livro)
   const data_emprestimo = (req.body.data_emprestimo)
   const data_devolucao = (req.body.data_devolucao)
 
-  console.log (usuario)
-  console.log (livro)
-  console.log (data_emprestimo)
-  console.log (data_devolucao)
+
+  console.log ("id livro:", livro)
 
   // Executando a query com os valores extraídos do corpo da requisição
   db.query('INSERT INTO emprestimo (id_usuario, id_livro, data_emprestimo, data_devolucao) VALUES (?, ?, ?, ?)', [usuario, livro, data_emprestimo, data_devolucao], (error, results) => {
