@@ -124,8 +124,6 @@ db.query('SELECT * from autor order by nome', (error, results) => {
   })
 
 
-
-
   app.get('/emprestimo', (req, res) => {
     db.query('select e.id_emprestimo, e.id_livro, e.id_usuario, date_format(e.data_emprestimo, "%d/%m/%y") as "data_emprestimo", date_format(e.data_devolucao, "%d/%m/%y") as "data_devolucao", u.nome, l.titulo from emprestimo e join usuario u on e.id_usuario = u.id_usuario join livro l on l.ISBN = e.id_livro', (error, results) => {
       if (error) {
@@ -146,7 +144,52 @@ db.query('SELECT * from autor order by nome', (error, results) => {
           res.render ('emprestimo', {emprestimos: results})
         }
       });
-  })
+  });
+
+
+  const carregarUsuarios = (callback) => {
+    db.query('SELECT * from usuario order by nome', (error, results) => {
+      if (error) {
+        console.log ('Erro ao carregar usuarios', error);
+      } else {
+        const usuarios = results
+        callback(null, usuarios);
+      }
+        })
+      };
+
+
+      const carregarLivros = (callback) => {
+        db.query('SELECT * from livro order by titulo', (error, results) => {
+          if (error) {
+            console.log ('Erro ao carregar livros', error);
+          } else {
+            const livros = results
+            callback(null, livros);
+          }
+            })
+          };
+
+
+  app.get ('/infoEmprestimo', (req, res) => {
+    const id = req.query.id_emprestimo;
+    console.log(id)
+    carregarUsuarios((error, listaUsuarios) =>{
+      carregarLivros((error, listaLivros) =>{
+        db.query('SELECT * FROM emprestimo WHERE id_emprestimo=?', [id], (error, results) =>{
+          if(error){
+            console.log ('Erro ao buscar o emprestimo com id_emprestimo', id)
+          } else {
+            if(results.length > 0){
+              res.render('infoEmprestimo', {livros: listaLivros, emprestimo: results[0], usuarios: listaUsuarios});
+            }else{
+              console.log('Deu erro')
+            }
+          }
+        })
+      })
+    })
+  });
 
 
 

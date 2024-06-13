@@ -42,7 +42,7 @@
         <hr>
         <div class="list-group">
           <% emprestimos.forEach((emprestimo) => { %>
-            <a href="/emprestimo?id_emprestimo=<%= emprestimo.id_emprestimo %>" class="list-group-item list-group-item-action flex-column align-items-start">
+            <a href="/infoEmprestimo?id_emprestimo=<%= emprestimo.id_emprestimo %>" class="list-group-item list-group-item-action flex-column align-items-start">
               <div class="d-flex w-100 justify-content-between">
                 <h5 class="mb-1"><%= emprestimo.nome %> (Livro: <%= emprestimo.titulo %>) </h5>
               </div>

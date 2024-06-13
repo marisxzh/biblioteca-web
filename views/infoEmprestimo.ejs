@@ -24,47 +24,45 @@
       </div>
       <div class="col py-3">
         <div class="justify-content-center">
-          <h1 class="register-title"> Informações do livro </h1>
+          <h1 class="register-title"> Informações do empréstimo </h1>
         </div>
-        <form id="livroForm" method="post">
+        <form id="emprestimoForm" method="post">
           <div class="form-row">
-            <div class="form-group col-md-10">
-              <label for="inputTitulo">Título</label>
-              <input type="text" class="form-control" id="inputTitulo" name="inputTitulo" value="<%=livro.titulo%>" required>
-            </div>
-            <div class="form-group col-md-2">
-              <label for="inputISBN">ISBN</label>
-              <input type="text" class="form-control" id="inputISBN" name="inputISBN" value="<%=livro.ISBN%>" required>
-            </div>
+            <div class="form-row">
+
           </div>
           <div class="form-row">
             <div class="form-group col-md-8">
-              <label for="inputAutor">Autor</label>
-              <select id="inputAutor" class="form-control" name="inputAutor" required>
-                <% autores.forEach((autor)=> { %>
-                  <option  <%= livro.id_autor === autor.id_autor ? 'selected' : '' %> value="<%=autor.id_autor%>"><%=autor.nome%></option>
+              <label for="inputUsuario">Usuario</label>
+              <select id="inputUsuario" class="form-control" name="inputUsuario" required>
+                <% usuarios.forEach((usuario)=> { %>
+                  <option  <%= emprestimo.id_usuario === usuario.id_usuario ? 'selected' : '' %> value="<%=usuario.id_usuario %>"><%=usuario.nome%></option>
                 <% }); %> 
               </select>
             </div>
+            <div class="form-group col-md-8">
+                <label for="inputLivro">Livro</label>
+                <select id="inputLivro" class="form-control" name="inputLivro" required>
+                  <% livros.forEach((livro)=> { %>
+                    <option  <%= emprestimo.id_livro === livro.ISBN ? 'selected' : '' %> value="<%=livro.ISBN %>"><%=livro.titulo%></option>
+                  <% }); %> 
+                </select>
+              </div>
             <div class="form-group col-md-4">
-              <label for="inputAnoPublicacao">Ano de publicação</label>
-              <input type="text" class="form-control" id="inputAnoPublicacao" name="inputAnoPublicacao" value="<%=livro.ano_publicacao%>" required>
+              <label for="inputDataEmprestimo">Data do emprestimo:</label>
+              <input type="date" class="form-control" id="inputDataEmprestimo" name="inputDataEmprestimo" value="<%=emprestimo.data_emprestimo%>" required>
             </div>
-          </div>
-          <div class="form-group">
-            <label for="inputGenero">Gênero</label>
-            <input type="text" class="form-control" id="inputGenero" name="inputGenero" value="<%=livro.genero%>" required>
-          </div>
-          <div class="form-group">
-            <label for="textResumo">Resumo</label>
-            <textarea class="form-control" id="textResumo" name="textResumo" rows="4" required><%=livro.resumo%></textarea>
+            <div class="form-group col-md-4">
+                <label for="inputDataDevolucao">Data da devolução:</label>
+                <input type="date" class="form-control" id="inputDataDevolucao" name="inputDataDevolucao" value="<%=emprestimo.data_devolucao%>" required>
+              </div>
           </div>
           <div class="form-row">
             <div class="col-auto">
-              <button type="submit" class="btn btn-outline-success" onclick="submitForm('/editarLivro')">Salvar</button>
+              <button type="submit" class="btn btn-outline-success" onclick="submitForm('/editarEmprestimo')">Salvar</button>
             </div>
             <div class="col-auto">
-              <button type="button" class="btn btn-outline-danger" onclick="submitForm('/excluirLivro/<%=livro.ISBN%>')">Excluir</button>
+              <button type="button" class="btn btn-outline-danger" onclick="submitForm('/excluirEmprestimo/<%=emprestimo.id_emprestimo%>')">Excluir</button>
             </div>
           </div>
         </form>
@@ -88,7 +86,7 @@
     ></script>
     <script>
       function submitForm(action) {
-        const form = document.getElementById('livroForm');
+        const form = document.getElementById('emprestimoForm');
         form.action = action;
         form.submit();
       }
