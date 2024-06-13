@@ -182,13 +182,41 @@ app.get('/infoEmprestimo', (req, res) => {
           console.log('Erro ao buscar o emprestimo com id_emprestimo', id)
         } else {
           if (results.length > 0) {
-            var data_emprestimo_bd = results[0].data_devolucao;
-            const data_emprestimo = data_emprestimo_bd.getFullYear()+'-'+data_emprestimo_bd.getMonth()+'-'+data_emprestimo_bd.getDay();
+
+            var data_emprestimo_bd = results[0].data_emprestimo;
+
+            var data_emprestimo = data_emprestimo_bd.getFullYear()+ '-';
+            if(data_emprestimo_bd.getMonth() <= 9){
+              data_emprestimo = data_emprestimo + '0'
+            }
+            data_emprestimo = data_emprestimo + data_emprestimo_bd.getMonth() + '-' 
+            
+            if(data_emprestimo_bd.getDay() <= 9) {
+              data_emprestimo = data_emprestimo + '0'
+            }
+            data_emprestimo = data_emprestimo + data_emprestimo_bd.getDay()
+
+
 
             var data_devolucao_bd = results[0].data_devolucao;
-            const data_devolucao = data_devolucao_bd.getFullYear()+'-'+data_devolucao_bd.getMonth()+'-'+data_devolucao_bd.getDay();
+            if (data_devolucao_bd != null){
+            var data_devolucao = data_devolucao_bd.getFullYear()+ '-';
+            if(data_devolucao_bd.getMonth() <= 9){
+              data_devolucao = data_devolucao + '0'
+            }
+            data_devolucao = data_devolucao + data_devolucao_bd.getMonth() + '-' 
+            
+            if(data_devolucao_bd.getDay() <= 9) {
+              data_devolucao = data_devolucao + '0'
+            }
+            data_devolucao = data_devolucao + data_devolucao_bd.getDay()
+          }
+
             console.log('data da devolução:', data_devolucao)
             console.log('data da emprestimo:', data_emprestimo)
+            console.log(typeof(data_devolucao))
+
+
             res.render('infoEmprestimo', { livros: listaLivros, emprestimo: results[0], usuarios: listaUsuarios, data_emprestimo: data_emprestimo, data_devolucao: data_devolucao });
           } else {
             console.log('Deu erro')

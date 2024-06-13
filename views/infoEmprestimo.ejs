@@ -28,10 +28,6 @@
         </div>
         <form id="emprestimoForm" method="post">
           <div class="form-row">
-            <div class="form-row">
-
-          </div>
-          <div class="form-row">
             <div class="form-group col-md-8">
               <label for="inputUsuario">Usuario</label>
               <select id="inputUsuario" class="form-control" name="inputUsuario" required>
@@ -50,7 +46,7 @@
               </div>
 
             <div class="form-group col-md-4">
-              <label for="inputDataEmprestimo">Data do emprestimo:</label>
+              <label for="inputDataEmprestimo">Data do empréstimo:</label>
               <input type="date" class="form-control" id="inputDataEmprestimo" name="inputDataEmprestimo" value="<%=data_emprestimo%>" required>
             </div>
             <div class="form-group col-md-4">
@@ -58,8 +54,6 @@
                 <input type="date" class="form-control" id="inputDataDevolucao" name="inputDataDevolucao" value="<%=data_devolucao%>" required>
               </div>
           </div>
-
-
           
           <div class="form-row">
             <div class="col-auto">
@@ -98,3 +92,33 @@
   </body>
 </html>
 
+<style>
+
+  .form-row {
+      margin-left: 20px;
+  }
+  
+  .form-group {
+      margin-bottom: 15px;
+  }
+  
+  .register-title {
+    margin-left: 60px;
+      margin-bottom: 30px;
+  }
+  
+  .btn-group {
+      margin-top: 30px;
+      display: flex;
+  }
+  
+  .btn-group .btn {
+      margin-right: 10px; 
+  }
+  
+  .btn-group .btn:last-child {
+      margin-right: 0; /* Remove o espaço do último botão */
+  }
+  
+  
+  </style>
