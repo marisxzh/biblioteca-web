@@ -125,6 +125,32 @@ db.query('SELECT * from autor order by nome', (error, results) => {
 
 
 
+
+  app.get('/emprestimo', (req, res) => {
+    db.query('select e.id_emprestimo, e.id_livro, e.id_usuario, date_format(e.data_emprestimo, "%d/%m/%y") as "data_emprestimo", date_format(e.data_devolucao, "%d/%m/%y") as "data_devolucao", u.nome, l.titulo from emprestimo e join usuario u on e.id_usuario = u.id_usuario join livro l on l.ISBN = e.id_livro', (error, results) => {
+      if (error) {
+        console.log ('Houve um erro ao recuperar os emprestimos')
+      } else {
+        res.render('emprestimo', {emprestimos: results})
+      }
+    })
+  });
+
+  app.get('/pesquisarEmprestimo', (req, res) => {
+    const pesquisa = req.query.pesquisa;
+    console.log(pesquisa)
+      db.query('SELECT e.id_emprestimo, e.id_livro, e.id_usuario, e.data_emprestimo, e.data_devolucao, u.nome, l.titulo FROM emprestimo e JOIN usuario u ON u.id_usuario = e.id_usuario JOIN livro l ON l.ISBN = e.id_livro WHERE l.titulo LIKE ? OR u.nome LIKE ?;', [`%${pesquisa}%`, `%${pesquisa}%`], (error, results) => {
+        if (error) {
+          console.log ('Ocorreu um erro ao realizar o filtro')
+        } else {
+          res.render ('emprestimo', {emprestimos: results})
+        }
+      });
+  })
+
+
+
 app.listen(port, () => {
   console.log(`Servidor iniciado em http://localhost:${port}`);
 });
+
