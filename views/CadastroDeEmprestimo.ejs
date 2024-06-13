@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro de Empréstimos</title>
+    <link
+        rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+        crossorigin="anonymous"
+    />
+    <link
+        rel="stylesheet"
+        href="font-awesome-4.7.0/font-awesome-4.7.0/css/font-awesome.min.css"
+    />
+    <link rel="stylesheet" href="style/style.css">   
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="row flex-nowrap">
+            <%- include('./navbar.ejs', { activePage: 'cadastrarEmprestimo' }) %>
+        </div>
+        <div class="col py-3">
+            <nav class="navbar navbar-light justify-content-between">
+                
+            </nav>
+            <hr>
+            <h2>Cadastrar Novo Empréstimo</h2>
+            <form action="/cadastrarEmprestimo" method="post">
+                <div class="form-group">
+                    <label for="nome_usuario">Nome do usuario</label>
+              <select id="nome_usuario" class="form-control" name="nome_usuario" required>
+                <% usuarios.forEach((usuario)=> { %>
+                  <option    value="<%=usuario.id_usuario %>"><%=usuario.nome%></option>
+                <% }); %> 
+              </select>
+                </div>
+                <div class="form-group">
+                    <select id="nome_livro" class="form-control" name="nome_livro" required>
+                        <% livros.forEach((livro)=> { %>
+                          <option value="<%=livro.ISBN %>"><%=livro.titulo%></option>
+                        <% }); %> 
+                      </select>
+</div>
+<div class="form-group">
+<label for="data_emprestimo">Data do Empréstimo</label>
+<input type="date" class="form-control" id="data_emprestimo" name="data_emprestimo" required>
+</div>
+<div class="form-group">
+<label for="data_devolucao">Data da Devolução</label>
+<input type="date" class="form-control" id="data_devolucao" name="data_devolucao" required>
+</div>
+<button type="submit" class="btn btn-primary">Cadastrar</button>
+</form>
+</div>
+</div>

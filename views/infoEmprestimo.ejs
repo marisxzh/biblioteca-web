@@ -48,6 +48,7 @@
                   <% }); %> 
                 </select>
               </div>
+
             <div class="form-group col-md-4">
               <label for="inputDataEmprestimo">Data do emprestimo:</label>
               <input type="date" class="form-control" id="inputDataEmprestimo" name="inputDataEmprestimo" value="<%=emprestimo.data_emprestimo%>" required>
@@ -57,9 +58,12 @@
                 <input type="date" class="form-control" id="inputDataDevolucao" name="inputDataDevolucao" value="<%=emprestimo.data_devolucao%>" required>
               </div>
           </div>
+
+
+          
           <div class="form-row">
             <div class="col-auto">
-              <button type="submit" class="btn btn-outline-success" onclick="submitForm('/editarEmprestimo')">Salvar</button>
+              <button type="submit" class="btn btn-outline-success" onclick="submitForm('/editarEmprestimo/<%=emprestimo.id_emprestimo%>')">Salvar</button>
             </div>
             <div class="col-auto">
               <button type="button" class="btn btn-outline-danger" onclick="submitForm('/excluirEmprestimo/<%=emprestimo.id_emprestimo%>')">Excluir</button>

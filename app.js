@@ -171,6 +171,9 @@ db.query('SELECT * from autor order by nome', (error, results) => {
           };
 
 
+        
+
+
   app.get ('/infoEmprestimo', (req, res) => {
     const id = req.query.id_emprestimo;
     console.log(id)
@@ -191,6 +194,76 @@ db.query('SELECT * from autor order by nome', (error, results) => {
     })
   });
 
+
+  app.post ('/editarEmprestimo/:id_emprestimo', (req, res) => {
+    const id_emprestimo = req.params.id_emprestimo;
+    const usuario = parseInt(req.body.inputUsuario)
+    const livro = parseInt(req.body.inputLivro)
+    const data_emprestimo = (req.body.inputDataEmprestimo)
+    const data_devolucao = (req.body.inputDataDevolucao)
+
+    console.log ("id_emprestimo", id_emprestimo)
+
+    db.query('UPDATE emprestimo set id_usuario = ?, id_livro = ?, data_emprestimo = ?, data_devolucao = ? where id_emprestimo = ?', [usuario, livro, data_emprestimo, data_devolucao, id_emprestimo], (error, results) => {
+      if(error){
+        console.log ('Erro ao editar livro.', error)
+      }else {
+        res.redirect('/emprestimo')
+      }
+    })
+  });
+
+  app.post('/excluirEmprestimo/:id_emprestimo', (req, res) => {
+    const id_emprestimo = parseInt(req.params.id_emprestimo);
+    console.log (id_emprestimo)
+    db.query('DELETE from emprestimo WHERE id_emprestimo = ?', [id_emprestimo], (error, results) => {
+      if (error){
+        console.log('erro ao excluir o livro', error)
+      } else {
+        res.redirect('/emprestimo')
+      }
+    })
+  });
+
+
+
+  app.get('/adicionarEmprestimo', (req, res) => {
+    carregarUsuarios((error, listaUsuarios) =>{
+      carregarLivros((error, listaLivros) =>{
+
+              res.render('CadastroDeEmprestimo', {livros: listaLivros, usuarios: listaUsuarios});
+
+            })
+          })
+        })
+
+
+// cadastro
+app.post('/cadastrarEmprestimo', (req, res) => {
+
+  // Extraindo os valores do corpo da requisição
+  const usuario = parseInt(req.body.nome_usuario)
+  const livro = parseInt(req.body.nome_livro)
+  const data_emprestimo = (req.body.data_emprestimo)
+  const data_devolucao = (req.body.data_devolucao)
+
+  console.log (usuario)
+  console.log (livro)
+  console.log (data_emprestimo)
+  console.log (data_devolucao)
+
+  // Executando a query com os valores extraídos do corpo da requisição
+  db.query('INSERT INTO emprestimo (id_usuario, id_livro, data_emprestimo, data_devolucao) VALUES (?, ?, ?, ?)', [usuario, livro, data_emprestimo, data_devolucao], (error, results) => {
+      if (error) {
+          // Em caso de erro, loga a mensagem de erro e envia uma resposta de erro
+          console.log('Erro ao cadastrar empréstimo:', error);
+          res.status(500).send('Erro ao cadastrar empréstimo');
+      } else {
+
+          res.redirect('/emprestimo');
+      }
+  });
+});
 
 
 app.listen(port, () => {
