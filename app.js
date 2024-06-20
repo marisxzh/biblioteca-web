@@ -182,41 +182,20 @@ app.get('/infoEmprestimo', (req, res) => {
           console.log('Erro ao buscar o emprestimo com id_emprestimo', id)
         } else {
           if (results.length > 0) {
-
-            var data_emprestimo_bd = results[0].data_emprestimo;
-
-            var data_emprestimo = data_emprestimo_bd.getFullYear()+ '-';
-            if(data_emprestimo_bd.getMonth() <= 9){
-              data_emprestimo = data_emprestimo + '0'
-            }
-            data_emprestimo = data_emprestimo + data_emprestimo_bd.getMonth() + '-' 
+            console.log(results[0])
+            const data_emprestimo_bd = results[0].data_emprestimo;
+            const data_emprestimo_js = new Date(data_emprestimo_bd);
+            const data_emprestimo = data_emprestimo_js.toISOString().substring(0, 10);
             
-            if(data_emprestimo_bd.getDay() <= 9) {
-              data_emprestimo = data_emprestimo + '0'
-            }
-            data_emprestimo = data_emprestimo + data_emprestimo_bd.getDay()
-
-
-
-            var data_devolucao_bd = results[0].data_devolucao;
+            const data_devolucao_bd = results[0].data_devolucao;
+            console.log(data_devolucao_bd)
             if (data_devolucao_bd != null){
-            var data_devolucao = data_devolucao_bd.getFullYear()+ '-';
-            if(data_devolucao_bd.getMonth() <= 9){
-              data_devolucao = data_devolucao + '0'
+              const data_devolucao_js = new Date(data_devolucao_bd);
+              data_devolucao = data_devolucao_js.toISOString().substring(0, 10);
+            }else{
+              data_devolucao = null
             }
-            data_devolucao = data_devolucao + data_devolucao_bd.getMonth() + '-' 
-            
-            if(data_devolucao_bd.getDay() <= 9) {
-              data_devolucao = data_devolucao + '0'
-            }
-            data_devolucao = data_devolucao + data_devolucao_bd.getDay()
-          }
-
-            console.log('data da devolução:', data_devolucao)
-            console.log('data da emprestimo:', data_emprestimo)
-            console.log(typeof(data_devolucao))
-
-
+           
             res.render('infoEmprestimo', { livros: listaLivros, emprestimo: results[0], usuarios: listaUsuarios, data_emprestimo: data_emprestimo, data_devolucao: data_devolucao });
           } else {
             console.log('Deu erro')
@@ -279,7 +258,12 @@ app.post('/cadastrarEmprestimo', (req, res) => {
   const usuario = parseInt(req.body.nome_usuario)
   const livro = parseInt(req.body.id_livro)
   const data_emprestimo = (req.body.data_emprestimo)
-  const data_devolucao = (req.body.data_devolucao)
+  var data_devolucao = (req.body.data_devolucao)
+
+  if (data_devolucao === ''){
+    data_devolucao = null
+  }
+  console.log(data_devolucao)
 
 
   console.log("id livro:", livro)
